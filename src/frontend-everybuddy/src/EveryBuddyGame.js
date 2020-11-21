@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSpring, animated as a } from "react-spring";
 import Card from "./Card.js";
 
 function EveryBuddyGame({options, setOptions, highScore, setHighScore}) {
@@ -38,13 +37,13 @@ function EveryBuddyGame({options, setOptions, highScore, setHighScore}) {
   }, [game])
 
     if (selectedIndexes.length === 3) {
-        const match = ((game[selectedIndexes[0]].cardId ^ game[selectedIndexes[1]].cardId ^ game[selectedIndexes[2]].cardId) === 0)
+        const match = ((shown[selectedIndexes[0]].cardId ^ shown[selectedIndexes[1]].cardId ^ shown[selectedIndexes[2]].cardId) === 0)
         
         if (match) {
             setScore(x => x + 1)
             const newGame = [...game]
-            newGame[selectedIndexes[0]].selected = true
-            newGame[selectedIndexes[1]].selected = true
+            //newGame[selectedIndexes[0]].selected = true
+            //newGame[selectedIndexes[1]].selected = true
             setGame(newGame)
 
             const newIndexes = [...selectedIndexes]

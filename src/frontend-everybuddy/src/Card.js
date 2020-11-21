@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSpring, animated as a } from "react-spring";
 
 function imgName(cardId) {
-    return "cards/front%20"+("00"+cardId).substr(-2,2)+".png"
+    return "everybuddy/cards/front%20"+("00"+cardId).substr(-2,2)+".png"
 }
 
 function Card({
@@ -44,7 +44,7 @@ function Card({
                     console.log(`TOD @ ${sii}: ` + topOfDeck)
                     shown[id].cardId = game[topOfDeck+sii].cardId
                     setShown(shown)
-                    if (sii == 0) {
+                    if (sii === 0) {
                         setTopOfDeck(topOfDeck + 3)
                     }
                     setFlip(flip => !flip)
@@ -57,6 +57,7 @@ function Card({
     }, [selectedIndexes])
     
     const onCardClick = () => {
+        console.log("onCardClick " + selectedCount + ": " + selectedIndexes);
         if (!flipped && selectedCount < 3) {
             if (!shown[id].selected) {
                 setSelect(state => !state)
@@ -68,7 +69,7 @@ function Card({
                 let idx = selectedIndexes.indexOf(id)
                 setSelect(state => !state)
                 setSelectedCount(selectedCount - 1)
-                const newIndexes = selectedIndexes.filter(i => i != idx)
+                const newIndexes = selectedIndexes.filter(i => i !== idx)
                 setSelectedIndexes(newIndexes)
             }
         }

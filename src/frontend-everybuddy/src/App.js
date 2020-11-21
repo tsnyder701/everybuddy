@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSpring, animated as a } from "react-spring";
-import EveryBuddyGame from "../components/EveryBuddyGame";
+import EveryBuddyGame from "./EveryBuddyGame";
 
-export default function App() {
+function App() {
   const [options, setOptions] = useState(null)
   const [highScore, setHighScore] = useState(0)
 
@@ -114,11 +113,10 @@ export default function App() {
     }
 
     .back {
-      background-image: url(cards/back.png);
+      background-image: url(everybuddy/cards/back.png);
     }
 
     .front {
-      background-image: url(cards/front%2001.png);
       background-color: white;
     }
   `}
@@ -126,3 +124,5 @@ export default function App() {
           </div>
   )
 }
+
+export default App;
