@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/everybuddy/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/everybuddy/static/js/main.6704f584.chunk.js",
+    "main.js.map": "/everybuddy/static/js/main.6704f584.chunk.js.map",
+    "runtime-main.js": "/everybuddy/static/js/runtime-main.8e76134b.js",
+    "runtime-main.js.map": "/everybuddy/static/js/runtime-main.8e76134b.js.map",
+    "static/js/2.cd558257.chunk.js": "/everybuddy/static/js/2.cd558257.chunk.js",
+    "static/js/2.cd558257.chunk.js.map": "/everybuddy/static/js/2.cd558257.chunk.js.map",
+    "static/js/3.0c516649.chunk.js": "/everybuddy/static/js/3.0c516649.chunk.js",
+    "static/js/3.0c516649.chunk.js.map": "/everybuddy/static/js/3.0c516649.chunk.js.map",
+    "index.html": "/everybuddy/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/everybuddy/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.cd558257.chunk.js.LICENSE.txt": "/everybuddy/static/js/2.cd558257.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8e76134b.js",
+    "static/js/2.cd558257.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.6704f584.chunk.js"
+  ]
+}
