@@ -113,7 +113,7 @@ function App() {
     }
 
     .back {
-      background-image: url(everybuddy/cards/back.png);
+      background-image: url(cards/back.png);
     }
 
     .front {

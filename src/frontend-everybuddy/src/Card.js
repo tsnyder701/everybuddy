@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSpring, animated as a } from "react-spring";
 
 function imgName(cardId) {
-    return "everybuddy/cards/front%20"+("00"+cardId).substr(-2,2)+".png"
+    return "cards/front%20"+("00"+cardId).substr(-2,2)+".png"
 }
 
 function Card({
