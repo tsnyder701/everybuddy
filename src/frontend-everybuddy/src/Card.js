@@ -39,8 +39,8 @@ function Card({
             setSelectedCount(0)
             setSelectedIndexes([])
             setTimeout(() => {
-                if (topOfDeck < 63) {
-                    let sii = selectedIndexes.indexOf(id)
+                let sii = selectedIndexes.indexOf(id)
+                if (sii > -1 && topOfDeck + sii < 63) {
                     console.log(`TOD @ ${sii}: ` + topOfDeck)
                     shown[id].cardId = game[topOfDeck+sii].cardId
                     setShown(shown)
