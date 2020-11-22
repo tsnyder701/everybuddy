@@ -30,12 +30,12 @@ function Card({
     useEffect(() => {
         if (selectedIndexes[3] === true && selectedIndexes.indexOf(id) > -1) {
             setTimeout(() => {
-                setSelect(state => !state)
+                setSelect(state => false)
                 setSelectedCount(0)
                 setSelectedIndexes([])
             }, 1000)
         } else if (selectedIndexes[3] === false && selectedIndexes.indexOf(id) > -1) {
-            setFlip(flip => !flip)
+            setFlip(flip => true)
             setSelectedCount(0)
             setSelectedIndexes([])
             setTimeout(() => {
@@ -47,10 +47,10 @@ function Card({
                     if (sii === 0) {
                         setTopOfDeck(topOfDeck + 3)
                     }
-                    setFlip(flip => !flip)
-                    setSelect(state => !state)
+                    setFlip(flip => false)
+                    setSelect(state => false)
                 } else {
-                    setSelect(state => !state)
+                    setSelect(state => false)
                 }
             }, 1000)
         }
@@ -59,17 +59,17 @@ function Card({
     const onCardClick = () => {
         console.log("onCardClick " + selectedCount + ": " + selectedIndexes);
         if (!flipped && selectedCount < 3) {
-            if (!shown[id].selected) {
-                setSelect(state => !state)
+            if (!selected) {
+                setSelect(state => true)
                 setSelectedCount(selectedCount + 1)
                 const newIndexes = [...selectedIndexes]
                 newIndexes.push(id)
                 setSelectedIndexes(newIndexes)
             } else {
                 let idx = selectedIndexes.indexOf(id)
-                setSelect(state => !state)
+                setSelect(state => false)
                 setSelectedCount(selectedCount - 1)
-                const newIndexes = selectedIndexes.filter(i => i !== idx)
+                const newIndexes = selectedIndexes.filter(i => i !== id)
                 setSelectedIndexes(newIndexes)
             }
         }

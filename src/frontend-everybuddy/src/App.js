@@ -48,7 +48,10 @@ function App() {
           setHighScore={setHighScore}
         />
       ) : (
-        <h2>Choose a difficulty to begin!</h2>
+          <div>
+              <h2>Choose a difficulty to begin!</h2>
+              <img src="cards/instructions.png" class="instructions"/>
+          </div>
       )}
           <style jsx global>
   {`
@@ -79,6 +82,12 @@ function App() {
     }
     button:focus {
       outline: 0;
+    }
+    .instructions {
+      width: 1000px;
+      height: 1400px;
+      border-radius: 100px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
     #cards {
       width: ${175+195*(options-1)}px;
