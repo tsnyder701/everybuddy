@@ -19,26 +19,24 @@ use solana_sdk::{
 use thiserror::Error;
 
 #[derive(Clone, Debug, Eq, Error, FromPrimitive, PartialEq)]
-pub enum VoteError {
-    #[error("Unexpected Candidate")]
-    UnexpectedCandidate,
+pub enum GameError {
     #[error("Incorrect Owner")]
     IncorrectOwner,
     #[error("Incorrect Size")]
     IncorrectSize,
     #[error("Account Not Rent Exempt")]
     AccountNotRentExempt,
-    #[error("Account Not Check Account")]
-    AccountNotCheckAccount,
-    #[error("Already Voted")]
-    AlreadyVoted,
+    #[error("Not a Match")]
+    NotAMatch,
+    #[error("Card not in play")]
+    InvalidCard,
 }
-impl From<VoteError> for ProgramError {
-    fn from(e: VoteError) -> Self {
+impl From<GameError> for ProgramError {
+    fn from(e: GameError) -> Self {
         ProgramError::Custom(e as u32)
     }
 }
-impl<T> DecodeError<T> for VoteError {
+impl<T> DecodeError<T> for GameError {
     fn type_of() -> &'static str {
         "Vote Error"
     }
@@ -92,24 +90,22 @@ fn process_instruction(
 ) -> ProgramResult {
     info!("Rust program entrypoint");
 
-    if instruction_data.len() == 0 {
-        info!("Got an empty instruction_data");
-        return Ok(())
-    }
-    
     // Iterating accounts is safer then indexing
     let accounts_iter = &mut accounts.iter();
 
+    let data_account = next_account_info(accounts_iter)?;
+    
     // Get the account that holds the game.
     let game_account = next_account_info(accounts_iter)?;
 
     let signer_account = next_account_info(accounts_iter)?;
 
-    //info!("Received a call with ", instruction_data.len(), " instructions for game account ", *game_account.key);//, " and user account ", *signer_account.key);
+    info!(&*game_account.key.to_string());
+    info!(&*signer_account.key.to_string());
     // The account must be owned by the program in order to modify its data
     if game_account.owner != program_id {
         info!("Game account not owned by program");
-        return Err(VoteError::IncorrectOwner.into());
+        return Err(GameError::IncorrectOwner.into());
     }
 
     let mut raw_game_data = game_account.try_borrow_mut_data()?;
@@ -129,11 +125,11 @@ fn process_instruction(
             if let Some(i) = game.shown.iter().position(|&x| x == c) {
                 game.shown.remove(i);
             } else {
-                return Err(VoteError::IncorrectOwner.into());
+                return Err(GameError::InvalidCard.into());
             }
         }
         if xor_result != 0 {
-            return Err(VoteError::IncorrectOwner.into());
+            return Err(GameError::NotAMatch.into());
         }
         game.matches[player as usize] += 1;
         while game.shown.len() < 12 && game.deck.len() > 0 {
@@ -142,11 +138,14 @@ fn process_instruction(
             }
         }
     } else if instruction_data.len() == 136 {
-        //raw_game_data.copy_from_slice(instruction_data);
-        //return Ok(())
         game = EveryBuddy::unpack_unchecked(instruction_data)?;
+        while game.shown.len() < 12 && game.deck.len() > 0 {
+            if let Some(c) = game.deck.pop() {
+                game.shown.push(c);
+            }
+        }
     }else {
-        return Err(VoteError::IncorrectOwner.into());
+        return Err(GameError::IncorrectSize.into());
     }
     
     EveryBuddy::pack(game, &mut raw_game_data).expect("Failed to write EveryBuddy data");

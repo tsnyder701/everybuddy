@@ -15,7 +15,7 @@ import {sendAndConfirmTransaction} from './util/send-and-confirm-transaction';
 import {getOurAccount} from './ourAccount'
 import {getNodeConnection} from './nodeConnection'
 import {getStore} from './storeConfig'
-
+import {Store} from './util/store'
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -53,7 +53,7 @@ async function main() {
         process.exit(1)
     }
 
-    let deck = shuffle(range(63, 1))
+    let deck = range(63, 1).shuffle()
     console.log("Deck:", deck.toString());
     console.log("-----")
 
@@ -132,6 +132,10 @@ async function main() {
     console.log("Cost of game:",costOfGame, "lamports (", costOfGame/LAMPORTS_PER_SOL, ")")
     
     console.log("-----")
+
+    const gameAccount = {accountId: gamePubkey.toBase58()}
+    const store = new Store()
+    await store.save("game.json", gameAccount)
 }
 
 main()
